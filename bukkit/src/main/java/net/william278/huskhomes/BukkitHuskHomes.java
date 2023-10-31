@@ -57,6 +57,7 @@ import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -187,6 +188,13 @@ public class BukkitHuskHomes extends JavaPlugin implements HuskHomes, BukkitTask
         // Hook into bStats and check for updates
         initialize("metrics", (plugin) -> this.registerMetrics(METRICS_ID));
         this.checkForUpdates();
+
+        getServer().getServicesManager().register(
+                HuskHomesAPI.class,
+                HuskHomesAPI.getInstance(),
+                this,
+                ServicePriority.Normal
+        );
     }
 
     @NotNull
